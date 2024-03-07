@@ -62,7 +62,7 @@ export default function Sidebar() {
       </div>
       <div className="flex items-center justify-between">
         {" "}
-        <div className="flex items-center">
+        <div className="flex items-center gap-1">
           <img src={gamer} alt="" className="rounded-full h-10 w-10" />
           <div className="flex flex-col gap-1">
             <span className="font-bold">Kaim Arvas</span>
