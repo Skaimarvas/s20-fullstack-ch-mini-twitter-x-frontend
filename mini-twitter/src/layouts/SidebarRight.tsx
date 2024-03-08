@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 //Icon
 import { Icon } from "@iconify/react";
@@ -14,11 +13,7 @@ import Footer from "./Footer";
  */
 
 export default function SidebarRight() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   const onSubmit = (data: any) => {
     console.log(data);
   };

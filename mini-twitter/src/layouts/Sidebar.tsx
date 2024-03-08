@@ -1,4 +1,3 @@
-import React from "react";
 //Icon
 import { Icon } from "@iconify/react";
 //Png
