@@ -6,7 +6,7 @@ import gamer from "../assets/gamer.png";
 
 export default function Sidebar() {
   return (
-    <div className="flex flex-col gap-10 pt-5 ">
+    <div className="flex flex-col gap-10 pt-5 pr-8 border-r border-gray-300 ">
       <div>
         {" "}
         <Icon icon="logos:twitter" className="text-[40px]" />{" "}

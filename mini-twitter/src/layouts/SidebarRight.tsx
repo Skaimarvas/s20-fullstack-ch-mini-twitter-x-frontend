@@ -23,7 +23,7 @@ export default function SidebarRight() {
     console.log(data);
   };
   return (
-    <div className="flex flex-col gap-2 pt-4">
+    <div className="flex flex-col gap-2 pt-4 pl-8 border-l border-gray-300">
       <div className="sticky">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="relative">
