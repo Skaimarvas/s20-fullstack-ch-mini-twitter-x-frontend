@@ -22,7 +22,7 @@ export default function SidebarRight() {
             <input
               {...register("search")}
               type="text"
-              className="bg-gray-100 py-2 px-6 rounded-full"
+              className="bg-gray-100 py-2 pl-[50px] pr-2 rounded-full"
               placeholder="Search Twitter"
             />
 
