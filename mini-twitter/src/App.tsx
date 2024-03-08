@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./App.css";
 
 import Sidebar from "./layouts/Sidebar";
@@ -9,7 +8,9 @@ function App() {
     <>
       <div className="flex flex-row gap-5 justify-center">
         <Sidebar />
-        Deneme
+        <div className="w-2/4">
+          <span>Deneme</span>
+        </div>
         <SidebarRight />
       </div>
     </>
