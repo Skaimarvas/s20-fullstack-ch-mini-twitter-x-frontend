@@ -1,16 +1,18 @@
 import "./App.css";
 
+//Layouts
 import Sidebar from "./layouts/Sidebar";
 import SidebarRight from "./layouts/SidebarRight";
+import MainSection from "./layouts/MainSection";
 
 function App() {
   return (
     <>
-      <div className="flex flex-row gap-5 justify-center">
+      <div className="flex flex-row justify-center">
         <Sidebar />
-        <div className="w-2/4">
-          <span>Deneme</span>
-        </div>
+
+        <MainSection />
+
         <SidebarRight />
       </div>
     </>

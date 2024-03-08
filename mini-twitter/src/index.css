@@ -5,3 +5,7 @@
 /* * {
   border: solid 1px lime;
 } */
+
+.blackborder {
+  border: solid 1px black;
+}
