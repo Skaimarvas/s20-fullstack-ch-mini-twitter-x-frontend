@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 //Png
 import gamer from "../assets/gamer.png";
 
-export default function Sidebar() {
+export const Sidebar: React.FC = () => {
   return (
     <div className="flex flex-col gap-10 pt-5 pr-8 border-r border-gray-300 ">
       <div>
@@ -65,11 +65,11 @@ export default function Sidebar() {
           <img src={gamer} alt="" className="rounded-full h-10 w-10" />
           <div className="flex flex-col gap-1">
             <span className="font-bold">Kaim Arvas</span>
-            <span>@kaim_arvas</span>
+            <span className="text-sm text-gray-500">@kaim_arvas</span>
           </div>
         </div>
         <Icon icon="icon-park-outline:more" className="text-[30px]" />
       </div>
     </div>
   );
-}
+};
