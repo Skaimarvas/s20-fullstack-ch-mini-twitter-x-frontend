@@ -12,7 +12,7 @@ import Footer from "./Footer";
  *
  */
 
-export default function SidebarRight() {
+export const SidebarRight: React.FC = () => {
   const { register, handleSubmit } = useForm();
   const onSubmit = (data: any) => {
     console.log(data);
@@ -120,4 +120,4 @@ export default function SidebarRight() {
       <Footer />
     </div>
   );
-}
+};
