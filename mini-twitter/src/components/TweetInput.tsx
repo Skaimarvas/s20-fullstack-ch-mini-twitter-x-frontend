@@ -2,6 +2,8 @@
 import profile from "../assets/gamer.png";
 //Icon
 import { Icon } from "@iconify/react";
+//Hooks
+import { useForm } from "react-hook-form";
 
 /** Notes:
  *  Input içindeki yazıyı konumlandırmam lazım.
@@ -10,6 +12,10 @@ import { Icon } from "@iconify/react";
  */
 
 export const TweetInput: React.FC = () => {
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
   return (
     <div className="flex gap-2 justify-start items-start w-full px-3 py-2 border-b border-gray-300">
       <div className="flex justify-center items-center">
@@ -17,8 +23,9 @@ export const TweetInput: React.FC = () => {
       </div>
       <div className="flex flex-col gap-2   w-full">
         <div>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <input
+              {...register("tweet")}
               type="text"
               className="flex h-[100px] w-full outline-none px-2 text-wrap"
               placeholder="What's happening"
