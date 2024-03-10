@@ -1,0 +1,13 @@
+package com.example.minitwitterspring.service;
+
+import com.example.minitwitterspring.entity.User;
+
+import java.util.List;
+
+public interface UserService {
+   List<User> findAll();
+   User save(User user);
+   User findById(long id);
+
+   User remove(long id);
+}
