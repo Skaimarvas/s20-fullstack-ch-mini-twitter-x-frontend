@@ -1,11 +1,14 @@
 package com.example.minitwitterspring.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @NoArgsConstructor
@@ -26,12 +29,49 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Map<Long,Tweet> tweets = new HashMap<>();
+    private List<Tweet> tweets ;
 
-    private Map<Long,Tweet> likedTweets;
+    public void addTweets(Tweet tweet){
+        if(tweets == null){
+            tweets = new ArrayList<>();
+        }
+        this.tweets.add(tweet);
+    }
+    public void removeTweets(Tweet tweet){
+        if(tweets != null ){
+            tweets.remove(tweet);
+        }
+    }
 
-    private Map<Long,Tweet> retweetedTweets;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Tweet> likedTweets ;
+
+
+    public void addLikedTweets(Tweet tweet){
+        if(likedTweets == null){
+            likedTweets = new ArrayList<>();
+        }
+
+        if (!likedTweets.contains(tweet)){
+            likedTweets.add(tweet);
+        }
+    }
+
+    public void removedLikedTweets(Tweet tweet){
+        if(likedTweets != null){
+            likedTweets.remove(tweet);
+        }
+
+
+    }
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Tweet> retweetedTweets = new ArrayList<>();
+
 
 
 }
