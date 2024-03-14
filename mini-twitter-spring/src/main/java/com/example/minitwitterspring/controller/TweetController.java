@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/api/kiwitter")
+@CrossOrigin("*")
 public class TweetController {
 
     private final TweetService tweetService;
