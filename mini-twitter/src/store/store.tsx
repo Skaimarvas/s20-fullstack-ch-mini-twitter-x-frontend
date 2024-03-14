@@ -6,8 +6,16 @@ import {
   applyMiddleware,
   Middleware,
 } from "redux";
+import { tweetReducer } from "./reducers/TweetReducer";
+import { userReducer } from "./reducers/UserReducer";
 
-const reducers = combineReducers({});
+const reducers = combineReducers({
+  tweet: tweetReducer,
+  user: userReducer,
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 const middleware: Middleware[] = [logger, thunk];
 
