@@ -3,7 +3,7 @@ import "./App.css";
 //Layouts
 import { Sidebar } from "./layouts/Sidebar";
 import { SidebarRight } from "./layouts/SidebarRight";
-import MainSection from "./layouts/MainSection";
+import { MainSection } from "./layouts/MainSection";
 
 function App() {
   return (
