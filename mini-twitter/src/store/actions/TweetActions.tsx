@@ -28,8 +28,9 @@ export const removeTweet = (tweet: any) => {
   };
 };
 
-export const listTweet = () => {
+export const listTweet = (tweets: any) => {
   return {
     type: LIST_TWEETS,
+    payload: tweets,
   };
 };
