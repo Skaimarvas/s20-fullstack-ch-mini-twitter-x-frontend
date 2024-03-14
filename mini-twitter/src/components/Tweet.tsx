@@ -3,7 +3,11 @@ import avatar from "../assets/avatar/avatar1.png";
 //Icon
 import { Icon } from "@iconify/react";
 
-export const Tweet: React.FC = () => {
+interface TweetProps {
+  children: React.ReactNode;
+}
+
+export const Tweet: React.FC<TweetProps> = ({ children }) => {
   return (
     <div className="flex justify-start items-start gap-2 py-2 px-3 border-b border-gray-300 w-full">
       <div className="flex justify-center items-center">
@@ -16,13 +20,15 @@ export const Tweet: React.FC = () => {
           <span className="text-sm text-gray-500">.25m </span>
         </div>
         <div className="max-w-[500px] ">
-          <p className="text-sm text-gray-500">
-            Illegals beat up American police officers in Times Square, got out
-            of jail for free and, instead of being deported, were given free
-            tickets to California …
-            <br />
-            Why?
-          </p>
+          {children || (
+            <p className="text-sm text-gray-500">
+              Illegals beat up American police officers in Times Square, got out
+              of jail for free and, instead of being deported, were given free
+              tickets to California …
+              <br />
+              Why?
+            </p>
+          )}
         </div>
         <div className="flex gap-5">
           {" "}
