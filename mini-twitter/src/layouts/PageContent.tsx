@@ -7,10 +7,10 @@ export const PageContent: React.FC = () => {
   return (
     <div>
       <Switch>
-        <Route path="/signup" exact>
+        <Route path="/signup">
           <SignUpPage />
         </Route>
-        <Route path="/" exact>
+        <Route path="/">
           <Home />
         </Route>
       </Switch>
