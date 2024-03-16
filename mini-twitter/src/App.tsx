@@ -1,22 +1,17 @@
 import "./App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //Layouts
-import { Sidebar } from "./layouts/Sidebar";
-import { SidebarRight } from "./layouts/SidebarRight";
-import { MainSection } from "./layouts/MainSection";
+import { PageContent } from "./layouts/PageContent";
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
-      <div className="flex flex-row justify-center">
-        <Sidebar />
-
-        <MainSection />
-
-        <SidebarRight />
-      </div>
+      <PageContent />
+      <ToastContainer />
     </>
   );
-}
+};
 
 export default App;
