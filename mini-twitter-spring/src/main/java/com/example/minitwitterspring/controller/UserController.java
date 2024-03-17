@@ -1,8 +1,11 @@
 package com.example.minitwitterspring.controller;
 
+import com.example.minitwitterspring.dto.UserDto;
 import com.example.minitwitterspring.entity.User;
+import com.example.minitwitterspring.exception.UserException;
 import com.example.minitwitterspring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,14 +26,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public User login(@RequestBody User user){
-        User loginUser = userService.findById(user.getId());
+    public User login(@RequestBody UserDto userDto){
 
-        if(loginUser != null){
+        User loginUser = userService.findByEmail(userDto.email());
+
+        if(loginUser != null && loginUser.getPassword().equals(userDto.password())){
             return  loginUser;
         }
 
-        return null;
+        throw new UserException("Email or Password is wrong", HttpStatus.BAD_REQUEST);
 
     }
 
