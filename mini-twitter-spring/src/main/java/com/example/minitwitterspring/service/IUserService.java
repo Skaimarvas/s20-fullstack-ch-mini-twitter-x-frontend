@@ -38,6 +38,11 @@ public class IUserService implements UserService{
     }
 
     @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
     public User remove(long id) {
         User user = findById(id);
         if(user != null){
