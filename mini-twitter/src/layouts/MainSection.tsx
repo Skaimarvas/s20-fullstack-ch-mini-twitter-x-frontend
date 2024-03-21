@@ -9,10 +9,11 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/hook";
 //Thunks
 import { listTweets } from "../store/thunks/TweetThunk";
+import { RootState } from "../store/store";
 
 export const MainSection: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { tweets } = useAppSelector((state) => state.tweet);
+  const { tweets } = useAppSelector((store: RootState) => store.tweet);
 
   useEffect(() => {
     dispatch(listTweets());
