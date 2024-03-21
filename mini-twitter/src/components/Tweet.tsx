@@ -7,7 +7,7 @@ interface TweetProps {
   children: React.ReactNode;
 }
 
-export const Tweet: React.FC<TweetProps> = ({ children }) => {
+const Tweet: React.FC<TweetProps> = ({ children }) => {
   return (
     <div className="flex justify-start items-start gap-2 py-2 px-3 border-b border-gray-300 w-full">
       <div className="flex justify-center items-center">
@@ -66,3 +66,4 @@ export const Tweet: React.FC<TweetProps> = ({ children }) => {
     </div>
   );
 };
+export default Tweet;

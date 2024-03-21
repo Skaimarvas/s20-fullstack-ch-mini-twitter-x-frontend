@@ -1,7 +1,7 @@
 //Icon
 import { Icon } from "@iconify/react";
 
-export default function Footer() {
+const Footer: React.FC = () => {
   return (
     <div className="flex flex-col">
       <div className="flex justify-between gap-2 text-xs text-gray-500">
@@ -23,4 +23,6 @@ export default function Footer() {
       </div>
     </div>
   );
-}
+};
+
+export default Footer;

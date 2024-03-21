@@ -1,7 +1,7 @@
 import { mockTweets } from "../mock/MockTweet";
 //Components
-import { TweetInput } from "../components/TweetInput";
-import { Tweet } from "../components/Tweet";
+import TweetInput from "../components/TweetInput";
+import Tweet from "../components/Tweet";
 //Layouts
 import Header from "./Header";
 //Hooks
@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/hook";
 import { listTweets } from "../store/thunks/TweetThunk";
 import { RootState } from "../store/store";
 
-export const MainSection: React.FC = () => {
+const MainSection: React.FC = () => {
   const dispatch = useAppDispatch();
   const { tweets } = useAppSelector((store: RootState) => store.tweet);
 
@@ -37,3 +37,5 @@ export const MainSection: React.FC = () => {
     </div>
   );
 };
+
+export default MainSection;

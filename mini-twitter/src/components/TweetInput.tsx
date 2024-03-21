@@ -9,8 +9,8 @@ import { useAppDispatch } from "../hooks/hook";
 import { postTweetData } from "../store/thunks/TweetThunk";
 
 /** Notes:
- *  Input içindeki yazıyı konumlandırmam lazım.
- *  Genişliğin sonuna geldiğinde fazlalık olan textleri aşağı kaydırması lazım.
+ *  I need to position the text inside the input.
+ *  When the width is exceeded, the excess text should wrap and move downwards.
  *
  */
 
@@ -18,7 +18,7 @@ interface TweetFormData {
   content: string;
 }
 
-export const TweetInput: React.FC = () => {
+const TweetInput: React.FC = () => {
   const userLocalStorage = localStorage.getItem("userData");
   const userLS = userLocalStorage ? JSON.parse(userLocalStorage) : null;
   const dispatch = useAppDispatch();
@@ -82,3 +82,4 @@ export const TweetInput: React.FC = () => {
     </div>
   );
 };
+export default TweetInput;

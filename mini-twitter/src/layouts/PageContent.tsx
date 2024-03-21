@@ -5,7 +5,7 @@ import { Home } from "../pages/Home";
 import SignUpPage from "../pages/SignUpPage";
 import LoginPage from "../pages/LoginPage";
 
-export const PageContent: React.FC = () => {
+const PageContent: React.FC = () => {
   return (
     <div>
       <Switch>
@@ -22,3 +22,5 @@ export const PageContent: React.FC = () => {
     </div>
   );
 };
+
+export default PageContent;

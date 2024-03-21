@@ -3,7 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 //Layouts
-import { PageContent } from "./layouts/PageContent";
+import PageContent from "./layouts/PageContent";
 
 const App: React.FC = () => {
   return (
