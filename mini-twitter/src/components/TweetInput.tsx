@@ -4,6 +4,8 @@ import profile from "../assets/gamer.png";
 import { Icon } from "@iconify/react";
 //Hooks
 import { useForm } from "react-hook-form";
+import { useAppDispatch } from "../hooks/hook";
+import { postTweetData } from "../store/thunks/TweetThunk";
 
 /** Notes:
  *  Input içindeki yazıyı konumlandırmam lazım.
@@ -12,10 +14,15 @@ import { useForm } from "react-hook-form";
  */
 
 export const TweetInput: React.FC = () => {
+  const userLocalStorage = localStorage.getItem("userData");
+  const userLS = userLocalStorage ? JSON.parse(userLocalStorage) : null;
+  const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm();
   const onSubmit = (data: any) => {
-    console.log(data);
+    dispatch(postTweetData(userLS.id, data));
   };
+  console.log(userLS);
+
   return (
     <div className="flex gap-2 justify-start items-start w-full px-3 py-2 border-b border-gray-300">
       <div className="flex justify-center items-center">
@@ -25,7 +32,7 @@ export const TweetInput: React.FC = () => {
         <div className="flex flex-col gap-2">
           <div>
             <input
-              {...register("tweet")}
+              {...register("content")}
               type="text"
               className="flex h-[100px] w-full outline-none px-2 text-wrap"
               placeholder="What's happening"
