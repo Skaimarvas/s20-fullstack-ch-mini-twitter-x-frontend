@@ -3,8 +3,9 @@ import profile from "../assets/gamer.png";
 //Icon
 import { Icon } from "@iconify/react";
 //Hooks
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useAppDispatch } from "../hooks/hook";
+//Thunks
 import { postTweetData } from "../store/thunks/TweetThunk";
 
 /** Notes:
@@ -13,13 +14,17 @@ import { postTweetData } from "../store/thunks/TweetThunk";
  *
  */
 
+interface TweetFormData {
+  content: string;
+}
+
 export const TweetInput: React.FC = () => {
   const userLocalStorage = localStorage.getItem("userData");
   const userLS = userLocalStorage ? JSON.parse(userLocalStorage) : null;
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data: any) => {
-    dispatch(postTweetData(userLS.id, data));
+  const { register, handleSubmit } = useForm<TweetFormData>();
+  const onSubmit: SubmitHandler<TweetFormData> = (data) => {
+    dispatch(postTweetData(userLS?.id, data));
   };
   console.log(userLS);
 
