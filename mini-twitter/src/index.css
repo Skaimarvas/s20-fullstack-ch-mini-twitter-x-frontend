@@ -6,6 +6,9 @@
   border: solid 1px lime;
 } */
 
-.blackborder {
-  border: solid 1px black;
+.limeborder {
+  border: solid 1px lime;
+}
+.sidebarmenu {
+  @apply flex gap-4 items-center lg:justify-center hover:bg-gray-300 px-5 py-2 rounded-full  lg:p-[10px] hover:transition w-fit;
 }
