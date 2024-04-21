@@ -5,7 +5,7 @@ import SidebarRight from "../layouts/SidebarRight";
 
 export const Home: React.FC = () => {
   return (
-    <div className="flex flex-row justify-center">
+    <div className="flex flex-row justify-center md:justify-start">
       <Sidebar />
       <MainSection />
       <SidebarRight />
