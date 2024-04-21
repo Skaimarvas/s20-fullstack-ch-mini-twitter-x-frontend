@@ -6,6 +6,21 @@ export const LIKE_TWEET = "LIKE_TWEET";
 export const UNLIKE_TWEET = "UNLIKE_TWEET";
 export const RETWEET_TWEET = "RETWEET_TWEET";
 export const UNRETWEET_TWEET = "UNRETWEET_TWEET";
+export const GET_TWEET = "GET_TWEET";
+
+export const likeTweet = (id: number) => {
+  return {
+    type: LIKE_TWEET,
+    payload: id,
+  };
+};
+
+export const getTweet = (id: number) => {
+  return {
+    type: GET_TWEET,
+    payload: id,
+  };
+};
 
 export const postTweet = (tweet: any) => {
   return {
