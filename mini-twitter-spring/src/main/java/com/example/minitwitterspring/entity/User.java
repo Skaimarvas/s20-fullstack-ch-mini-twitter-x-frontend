@@ -14,7 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "user", schema = "kiwitter")
+@Table(name = "user", schema = "public")
 public class User {
 
     @Id

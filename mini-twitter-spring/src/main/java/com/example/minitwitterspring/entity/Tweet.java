@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "tweet", schema = "kiwitter")
+@Table(name = "tweet", schema = "public")
 public class Tweet {
 
 
