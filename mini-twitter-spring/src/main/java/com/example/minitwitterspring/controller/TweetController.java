@@ -32,12 +32,12 @@ public class TweetController {
         this.userService = userService;
     }
 
-    @GetMapping("/tweets")
+    @GetMapping("/tweet")
     public List<Tweet> listAll(){
         return tweetService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("tweet/{id}")
     public Tweet findTweet(@PathVariable long id){
         return tweetService.findById(id);
     }
@@ -78,17 +78,15 @@ public class TweetController {
         return null;
     }
 
-    @PostMapping("/like/{userId}/{tweetId}")
+    @PostMapping("/tweet/like/{tweetId}")
     @Transactional
-    public Tweet likedTweet(@PathVariable long userId, @PathVariable long tweetId){
+    public List<Tweet> likedTweet(@PathVariable long tweetId){
         Tweet foundTweet = tweetService.findById(tweetId);
-        User foundUser = userService.findById(userId);
-        if(foundTweet != null && foundUser != null ){
+        if(foundTweet != null  ){
             foundTweet.setLikeTweet(foundTweet.getLikeTweet() + 1);
-            foundUser.addLikedTweets(foundTweet);
-            return foundTweet;
+            return tweetService.findAll();
         }
-        return foundTweet;
+        return tweetService.findAll();
     }
 
     @PostMapping("/unlike/{userId}/{tweetId}")
