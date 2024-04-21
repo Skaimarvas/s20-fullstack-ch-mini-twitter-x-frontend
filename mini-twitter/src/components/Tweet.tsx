@@ -1,36 +1,59 @@
 //Png
+import { Link, useParams } from "react-router-dom";
 import avatar from "../assets/avatar/avatar1.png";
 //Icon
 import { Icon } from "@iconify/react";
+//Hooks
+import { useAppDispatch, useAppSelector } from "../hooks/hook";
+//Interface
+import { TweetGetType } from "../Interfaces/TweetInterface";
+//Thunk
+import { listTweets, postlikeTweet } from "../store/thunks/TweetThunk";
+import { useEffect } from "react";
 
 interface TweetProps {
-  children: React.ReactNode;
+  tweetContent?: TweetGetType;
 }
 
-const Tweet: React.FC<TweetProps> = ({ children }) => {
+const Tweet: React.FC<TweetProps> = ({ tweetContent }) => {
+  const dispatch = useAppDispatch();
+  const { tweets } = useAppSelector((store) => store.tweet);
+
+  const params = useParams();
+
+  const tweetId = tweets.find((tw) => tw.id == params.id);
+  useEffect(() => {
+    dispatch(listTweets());
+  }, []);
   return (
-    <div className="flex justify-start items-start gap-2 py-2 px-3 border-b border-gray-300 w-full">
+    <div className="flex justify-start items-start gap-2 py-2 px-3 hover:bg-gray-100   hover:transition border-b border-gray-300 w-full">
       <div className="flex justify-center items-center">
-        <img src={avatar} alt="" className="w-12 h-12 rounded-full" />
+        <img
+          src={avatar}
+          alt="profile image"
+          className="min-w-12 min-h-12 max-w-12 max-h-12 rounded-full"
+        />
       </div>
-      <div className="flex flex-col gap-5">
-        <div className="flex gap-1 items-center">
+      <div className="flex flex-col gap-5 w-full">
+        <div className="flex flex-wrap gap-1">
           <span className="font-bold">Elon Musk</span>
           <span className="text-sm text-gray-500">@elon_musk</span>
           <span className="text-sm text-gray-500">.25m </span>
         </div>
-        <div className="max-w-[500px] ">
-          {children || (
-            <p className="text-sm text-gray-500">
-              Illegals beat up American police officers in Times Square, got out
-              of jail for free and, instead of being deported, were given free
-              tickets to California …
-              <br />
-              Why?
+        <div>
+          {" "}
+          {(tweetId && (
+            <p className="text-sm text-gray-500 text-left">
+              {" "}
+              {tweetId.content}
+            </p>
+          )) || (
+            <p className="text-sm text-gray-500 text-left">
+              {tweetContent?.content}
             </p>
           )}
         </div>
-        <div className="flex gap-5">
+        <div className="flex justify-between">
           {" "}
           <div className="flex items-center gap-2">
             <Icon
@@ -47,11 +70,19 @@ const Tweet: React.FC<TweetProps> = ({ children }) => {
             <span className="text-sm text-gray-500 ">5</span>
           </div>
           <div className="flex items-center gap-2">
-            <Icon
-              icon="icon-park-outline:like"
-              className="text-[20px] text-gray-500"
-            />
-            <span className="text-sm text-gray-500 ">8</span>
+            <button
+              onClick={(e) => {
+                dispatch(postlikeTweet(tweetContent.id));
+              }}
+            >
+              <Icon
+                icon="icon-park-outline:like"
+                className="text-[20px] text-gray-500"
+              />
+            </button>
+            <span className="text-sm text-gray-500 ">
+              {tweetContent?.likeTweet}{" "}
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <Icon icon="uil:upload" className="text-[20px] text-gray-500" />
