@@ -1,6 +1,8 @@
 export interface TweetGetType {
   id: number;
   content: string;
-  likeTweet: number;
-  retweet: number;
+  likedCount: number;
+  likedByUser: any[];
+  retweetCount: number;
+  retweetedByUser: any[];
 }
