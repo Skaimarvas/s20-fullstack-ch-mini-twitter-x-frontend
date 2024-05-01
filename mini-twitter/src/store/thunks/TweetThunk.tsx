@@ -2,10 +2,51 @@ import axios from "axios";
 import { Dispatch } from "redux";
 import { listTweet } from "../actions/TweetActions";
 
-export const postlikeTweet = (id: number) => {
+export const postlikeTweet = (userId: number, tweetId: number) => {
   return (dispatch: Dispatch) => {
     axios
-      .post(`http://localhost:9000/v1/api/kiwitter/tweet/like/${id}`)
+      .post(
+        `http://localhost:9000/v1/api/kiwitter/tweet/like/${userId}/${tweetId}`
+      )
+      .then((res: any) => {
+        dispatch(listTweet(res.data));
+      })
+      .catch((err: any) => console.log(err.message));
+  };
+};
+
+export const postunlikeTweet = (userId: number, tweetId: number) => {
+  return (dispatch: Dispatch) => {
+    axios
+      .delete(
+        `http://localhost:9000/v1/api/kiwitter/tweet/like/${userId}/${tweetId}`
+      )
+      .then((res: any) => {
+        dispatch(listTweet(res.data));
+      })
+      .catch((err: any) => console.log(err.message));
+  };
+};
+
+export const postretweetTweet = (userId: number, tweetId: number) => {
+  return (dispatch: Dispatch) => {
+    axios
+      .post(
+        `http://localhost:9000/v1/api/kiwitter/tweet/retweet/${userId}/${tweetId}`
+      )
+      .then((res: any) => {
+        dispatch(listTweet(res.data));
+      })
+      .catch((err: any) => console.log(err.message));
+  };
+};
+
+export const postunretweetTweet = (userId: number, tweetId: number) => {
+  return (dispatch: Dispatch) => {
+    axios
+      .delete(
+        `http://localhost:9000/v1/api/kiwitter/tweet/retweet/${userId}/${tweetId}`
+      )
       .then((res: any) => {
         dispatch(listTweet(res.data));
       })
