@@ -1,15 +1,16 @@
 import React from "react";
 //Icon
 import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
 
 const SideBarMenu: React.FC = () => {
   return (
     <div className="flex flex-col gap-[10px] font-bold lg:items-center ">
-      <button className="sidebarmenu">
+      <Link to="/" className="sidebarmenu">
         {" "}
         <Icon icon="mingcute:home-5-line" className="text-[30px]" />
         <span className="lg:hidden text-[20px]  ">Home</span>{" "}
-      </button>
+      </Link>
       <button className="sidebarmenu">
         {" "}
         <Icon icon="iconoir:hashtag" className="text-[30px]" />
