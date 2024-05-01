@@ -1,30 +1,86 @@
 //Png
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import avatar from "../assets/avatar/avatar1.png";
 //Icon
 import { Icon } from "@iconify/react";
 //Hooks
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/hook";
 //Interface
 import { TweetGetType } from "../Interfaces/TweetInterface";
 //Thunk
-import { listTweets, postlikeTweet } from "../store/thunks/TweetThunk";
-import { useEffect } from "react";
+import {
+  listTweets,
+  postlikeTweet,
+  postretweetTweet,
+  postunlikeTweet,
+  postunretweetTweet,
+} from "../store/thunks/TweetThunk";
 
 interface TweetProps {
   tweetContent?: TweetGetType;
 }
 
 const Tweet: React.FC<TweetProps> = ({ tweetContent }) => {
+  //-------------States----------------------------------------------//
+
   const dispatch = useAppDispatch();
+
   const { tweets } = useAppSelector((store) => store.tweet);
+
+  const { likedTweets, retweetedTweets } = useAppSelector(
+    (store) => store.user
+  );
+
+  const [isLiked, setIsLiked] = useState(false);
+
+  const [isRetweeted, setIsRetweeted] = useState(false);
+
+  const { id } = useAppSelector((store) => store.user);
 
   const params = useParams();
 
+  //-----------------------------------------------------------------//
+
+  const redTweetLike = likedTweets.find((tw: any) => tw.id == tweetContent?.id);
+  const greenTweetRetweet = retweetedTweets.find(
+    (tw: any) => tw.id == tweetContent?.id
+  );
+
   const tweetId = tweets.find((tw) => tw.id == params.id);
+
+  const handleLikeClick = () => {
+    return !isLiked
+      ? dispatch(postlikeTweet(id, tweetContent.id))
+      : dispatch(postunlikeTweet(id, tweetContent.id));
+  };
+
+  const handleRetweetClick = () => {
+    return !isRetweeted
+      ? dispatch(postretweetTweet(id, tweetContent.id))
+      : dispatch(postunretweetTweet(id, tweetContent.id));
+  };
+
+  //-------------Logs----------------------------------------------//
+
+  // console.log("redTweetLike", redTweetLike);
+  // console.log("greenTweetRetweet", greenTweetRetweet);
+  // console.log("tweetContent", tweetContent);
+
+  //-----------------------------------------------------------------//
+
+  //-------------Effect----------------------------------------------//
+
+  useEffect(() => {
+    setIsLiked(redTweetLike ? true : false);
+    setIsRetweeted(greenTweetRetweet ? true : false);
+  }, [likedTweets, retweetedTweets]);
+
   useEffect(() => {
     dispatch(listTweets());
   }, []);
+
+  //-------------Effect----------------------------------------------//
   return (
     <div className="flex justify-start items-start gap-2 py-2 px-3 hover:bg-gray-100   hover:transition border-b border-gray-300 w-full">
       <div className="flex justify-center items-center">
@@ -62,28 +118,24 @@ const Tweet: React.FC<TweetProps> = ({ tweetContent }) => {
             />
             <span className="text-sm text-gray-500 ">10</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Icon
-              icon="ant-design:retweet-outlined"
-              className="text-[20px] text-gray-500"
-            />
-            <span className="text-sm text-gray-500 ">5</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={(e) => {
-                dispatch(postlikeTweet(tweetContent.id));
-              }}
-            >
-              <Icon
-                icon="icon-park-outline:like"
-                className="text-[20px] text-gray-500"
-              />
-            </button>
-            <span className="text-sm text-gray-500 ">
-              {tweetContent?.likeTweet}{" "}
-            </span>
-          </div>
+          <button
+            className={`flex items-center gap-2 ${
+              isRetweeted ? "text-green-500" : "text-gray-500"
+            } `}
+            onClick={handleRetweetClick}
+          >
+            <Icon icon="ant-design:retweet-outlined" className="text-[20px] " />
+            <span className="text-sm  ">{tweetContent?.retweetCount}</span>
+          </button>
+          <button
+            className={`flex items-center gap-2 ${
+              isLiked ? "text-red-500" : "text-gray-500"
+            } `}
+            onClick={handleLikeClick}
+          >
+            <Icon icon="icon-park-outline:like" className="text-[20px] " />
+            <span className="text-sm">{tweetContent?.likedCount} </span>
+          </button>
           <div className="flex items-center gap-2">
             <Icon icon="uil:upload" className="text-[20px] text-gray-500" />
             <span className="text-sm text-gray-500 ">10</span>
