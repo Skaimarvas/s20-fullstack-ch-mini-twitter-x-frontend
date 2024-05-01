@@ -1,15 +1,22 @@
 //Hooks
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+import { useAppDispatch } from "../hooks/hook";
 //Icon
 import { Icon } from "@iconify/react";
-import { useAppDispatch } from "../hooks/hook";
+
+//Thunk
 import { postLoginData } from "../store/thunks/UserThunk";
 
 const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm();
+  const history = useHistory();
   const onSubmit = (data: any) => {
     dispatch(postLoginData(data));
+    setTimeout(() => {
+      history.push("/");
+    }, 1000);
   };
   return (
     <div className="flex flex-col gap-5 justify-center items-center h-screen">
