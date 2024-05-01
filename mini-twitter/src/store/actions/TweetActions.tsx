@@ -15,6 +15,13 @@ export const likeTweet = (id: number) => {
   };
 };
 
+export const unlikeTweet = (id: number) => {
+  return {
+    type: UNLIKE_TWEET,
+    payload: id,
+  };
+};
+
 export const getTweet = (id: number) => {
   return {
     type: GET_TWEET,
