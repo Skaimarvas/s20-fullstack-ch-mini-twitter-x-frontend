@@ -1,7 +1,10 @@
 package com.example.minitwitterspring.service;
 
+import com.example.minitwitterspring.dto.TweetDto;
+import com.example.minitwitterspring.dto.TweetUserDto;
 import com.example.minitwitterspring.entity.Tweet;
 import com.example.minitwitterspring.repository.TweetRepository;
+import com.example.minitwitterspring.utils.TweetDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,30 +22,32 @@ public class ITweetService implements TweetService{
     }
 
     @Override
-    public List<Tweet> findAll() {
-        return tweetRepository.findAll();
+    public List<TweetDto> findAll() {
+        return tweetRepository.findAll().stream().
+                map((tweet) ->
+                TweetDtoConverter.getInstance().toDto(tweet)).toList();
     }
 
     @Override
-    public Tweet save(Tweet tweet) {
-        return tweetRepository.save(tweet);
+    public TweetDto save(Tweet tweet) {
+        Tweet savedTweet = tweetRepository.save(tweet);
+        return TweetDtoConverter.getInstance().toDto(savedTweet);
     }
 
     @Override
     public Tweet findById(long id) {
         Optional<Tweet> foundTweet = tweetRepository.findById(id);
-        if(foundTweet.isPresent()){
-            return foundTweet.get();
-        }
-        return null;
+        return foundTweet.orElse(null);
     }
 
     @Override
-    public Tweet remove(long id) {
-        Tweet tweet = findById(id);
-        if(tweet != null){
-            tweetRepository.delete(tweet);
-            return tweet;
+    public TweetDto remove(long id) {
+        Optional<Tweet> foundTweet = tweetRepository.findById(id);
+        if (foundTweet.isPresent()) {
+            tweetRepository.delete(foundTweet.get());
+            return TweetDtoConverter.getInstance().toDto(foundTweet.get());
+
+
         }
         return null;
     }
