@@ -1,22 +1,26 @@
 package com.example.minitwitterspring.controller;
 
 
+import com.example.minitwitterspring.dto.TweetDto;
 import com.example.minitwitterspring.entity.Tweet;
 import com.example.minitwitterspring.entity.User;
 import com.example.minitwitterspring.service.TweetService;
 import com.example.minitwitterspring.service.UserService;
+import com.example.minitwitterspring.utils.TweetDtoConverter;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
-/**Notlar:
+/**
+ * Notlar:
+ * Ctrl + Alt + O(letter) : remove unuse packages
+ * Ctrl + Alt + L: reformat code
  * i)Tweet'i güncellediğimde otomatik user'ın tweets'lerinden de güncelliyor. Bu tweet'in kullanıcısından güncellemeye gerek yokmuş.
  */
+
 
 @RestController
 @RequestMapping("/v1/api/kiwitter")
@@ -33,20 +37,24 @@ public class TweetController {
     }
 
     @GetMapping("/tweet")
-    public List<Tweet> listAll(){
+    public List<TweetDto> listAll() {
         return tweetService.findAll();
     }
 
     @GetMapping("tweet/{id}")
-    public Tweet findTweet(@PathVariable long id){
-        return tweetService.findById(id);
+    public TweetDto findTweet(@PathVariable long id) {
+        Tweet foundTweet = tweetService.findById(id);
+        if (foundTweet != null) {
+            return TweetDtoConverter.getInstance().toDto(foundTweet);
+        }
+        return null;
     }
 
     @PostMapping("/{userId}/tweet")
     @Transactional
-    public Tweet postTweet(@PathVariable long userId,@RequestBody Tweet tweet){
+    public TweetDto postTweet(@PathVariable long userId, @RequestBody Tweet tweet) {
         User user = userService.findById(userId);
-        if(user != null){
+        if (user != null) {
             user.addTweets(tweet);
             tweet.setUser(user);
             return tweetService.save(tweet);
@@ -56,50 +64,71 @@ public class TweetController {
 
     @PutMapping("/update/{userId}/{tweetId}")
     @Transactional
-    public Tweet updatedTweet(@RequestBody Tweet tweet, @PathVariable long tweetId, @PathVariable long userId ){
+    public TweetDto updatedTweet(@RequestBody Tweet tweet, @PathVariable long tweetId, @PathVariable long userId) {
         Tweet foundTweet = tweetService.findById(tweetId);
         User foundUser = userService.findById(userId);
-        if(foundTweet != null && foundTweet.getUser().getId() == foundUser.getId()){
+        if (foundTweet != null && foundTweet.getUser().getId() == foundUser.getId()) {
             foundTweet.setContent(tweet.getContent());
-            return tweetService.save(foundTweet);
+            tweetService.save(foundTweet);
+            return TweetDtoConverter.getInstance().toDto(foundTweet);
         }
-
         return null;
     }
 
-    @DeleteMapping("/delete/{userId}/{tweetId}")
+    @PostMapping("/tweet/like/{userId}/{tweetId}")
     @Transactional
-    public Tweet removedTweet(@PathVariable long tweetId, @PathVariable long userId){
+    public List<TweetDto> likeTweet(@PathVariable long tweetId, @PathVariable long userId) {
         Tweet foundTweet = tweetService.findById(tweetId);
         User foundUser = userService.findById(userId);
-        if(foundTweet != null && foundTweet.getUser().getId() == foundUser.getId()){
-            return tweetService.remove(tweetId);
-        }
-        return null;
-    }
-
-    @PostMapping("/tweet/like/{tweetId}")
-    @Transactional
-    public List<Tweet> likedTweet(@PathVariable long tweetId){
-        Tweet foundTweet = tweetService.findById(tweetId);
-        if(foundTweet != null  ){
+        if (foundTweet != null && foundUser != null && !foundUser.getLikedByUser().contains(foundTweet)) {
             foundTweet.setLikeTweet(foundTweet.getLikeTweet() + 1);
+            foundUser.addLikedTweets(foundTweet);
+            foundTweet.addLikedByUser(foundUser);
             return tweetService.findAll();
         }
         return tweetService.findAll();
     }
 
-    @PostMapping("/unlike/{userId}/{tweetId}")
+    @DeleteMapping("/tweet/like/{userId}/{tweetId}")
     @Transactional
-    public Tweet unLikedTweet(@PathVariable long userId, @PathVariable long tweetId){
+    public List<TweetDto> unlikeTweet(@PathVariable long tweetId, @PathVariable long userId) {
         Tweet foundTweet = tweetService.findById(tweetId);
         User foundUser = userService.findById(userId);
-        if(foundTweet != null && foundTweet.getLikeTweet() > 0 && foundUser != null ){
+        if (foundTweet != null && foundTweet.getLikeTweet() > 0 && foundUser.getLikedByUser().contains(foundTweet) ) {
             foundTweet.setLikeTweet(foundTweet.getLikeTweet() - 1);
-            foundUser.removeTweets(foundTweet);
-            return foundTweet;
+            foundTweet.removeLikedByUser(foundUser);
+            foundUser.removeLikedTweets(foundTweet);
+            return tweetService.findAll();
         }
-        return foundTweet;
+        return tweetService.findAll();
+    }
+
+    @PostMapping("/tweet/retweet/{userId}/{tweetId}")
+    @Transactional
+    public List<TweetDto> retweetTweet(@PathVariable long tweetId, @PathVariable long userId) {
+        Tweet foundTweet = tweetService.findById(tweetId);
+        User foundUser = userService.findById(userId);
+        if (foundTweet != null && foundUser != null && !foundUser.getRetweetedByUsers().contains(foundTweet)) {
+            foundTweet.setRetweet(foundTweet.getRetweet() + 1);
+            foundUser.addRetweets(foundTweet);
+            foundTweet.addRetweetByUser(foundUser);
+            return tweetService.findAll();
+        }
+        return tweetService.findAll();
+    }
+
+    @DeleteMapping("/tweet/retweet/{userId}/{tweetId}")
+    @Transactional
+    public List<TweetDto> unretweetTweet(@PathVariable long tweetId, @PathVariable long userId) {
+        Tweet foundTweet = tweetService.findById(tweetId);
+        User foundUser = userService.findById(userId);
+        if (foundTweet != null && foundTweet.getRetweet() > 0) {
+            foundTweet.setRetweet(foundTweet.getRetweet() - 1);
+            foundTweet.removeRetweetByUser(foundUser);
+            foundUser.removeRetweets(foundTweet);
+            return tweetService.findAll();
+        }
+        return tweetService.findAll();
     }
 
 
