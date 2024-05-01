@@ -31,10 +31,7 @@ public class IUserService implements UserService{
     @Override
     public User findById(long id) {
         Optional<User> foundUser = userRepository.findById(id);
-        if(foundUser.isPresent()){
-            return foundUser.get();
-        }
-        return null;
+        return foundUser.orElse(null);
     }
 
     @Override
