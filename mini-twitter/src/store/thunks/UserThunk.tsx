@@ -29,13 +29,11 @@ export const postLoginData = (user: any) => {
         dispatch(postLoginDataToApi(res.data));
         console.log(res.data);
         toast.success("You have succesfully login!");
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 2000);
       })
       .catch((err: any) => {
         console.log(err);
         toast.error(err.response.data.message);
+        throw Error;
       });
   };
 };
