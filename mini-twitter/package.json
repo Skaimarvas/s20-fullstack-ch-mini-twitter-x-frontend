@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.7",
     "iconify-icon": "^2.0.0",
+    "mini-twitter": "file:",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.0",
