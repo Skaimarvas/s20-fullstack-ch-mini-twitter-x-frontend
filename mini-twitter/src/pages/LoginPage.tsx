@@ -30,7 +30,7 @@ const LoginPage: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-5">
             <input
-              {...register("email")}
+              {...register("username")}
               className="py-3 px-2 rounded-md border border-gray-300"
               type="text"
               placeholder="Email or Username"

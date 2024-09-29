@@ -1,10 +1,10 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { Dispatch } from "redux";
 import {
   postLoginDataToApi,
   postSignupDataToApi,
 } from "../actions/UserActions";
-import { toast } from "react-toastify";
 
 export const postSignupData = (user: any) => {
   return (dispatch: Dispatch) => {

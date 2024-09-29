@@ -55,9 +55,14 @@ export const postunretweetTweet = (userId: number, tweetId: number) => {
 };
 
 export const listTweets = () => {
+  const headers = {
+    "Content-Type": "application/json",
+    Username: "james",
+    Password: "123456asd",
+  };
   return (dispatch: Dispatch) => {
     axios
-      .get("http://localhost:9000/v1/api/kiwitter/tweet")
+      .get("http://localhost:9000/v1/api/kiwitter/tweet", { headers })
       .then((res: any) => dispatch(listTweet(res.data)))
       .catch((err: any) => console.log(err.message));
   };

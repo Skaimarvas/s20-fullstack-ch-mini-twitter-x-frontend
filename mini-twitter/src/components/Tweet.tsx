@@ -42,11 +42,6 @@ const Tweet: React.FC<TweetProps> = ({ tweetContent }) => {
 
   //-----------------------------------------------------------------//
 
-  const redTweetLike = likedTweets.find((tw: any) => tw.id == tweetContent?.id);
-  const greenTweetRetweet = retweetedTweets.find(
-    (tw: any) => tw.id == tweetContent?.id
-  );
-
   const tweetId = tweets.find((tw) => tw.id == params.id);
 
   const handleLikeClick = () => {
@@ -72,13 +67,12 @@ const Tweet: React.FC<TweetProps> = ({ tweetContent }) => {
   //-------------Effect----------------------------------------------//
 
   useEffect(() => {
-    setIsLiked(redTweetLike ? true : false);
-    setIsRetweeted(greenTweetRetweet ? true : false);
-  }, [likedTweets, retweetedTweets]);
-
-  useEffect(() => {
+    setIsLiked(likedTweets.find((tw: any) => tw.id == tweetContent?.id));
+    setIsRetweeted(
+      retweetedTweets.find((tw: any) => tw.id == tweetContent?.id)
+    );
     dispatch(listTweets());
-  }, []);
+  }, [tweetContent?.likedCount, tweetContent?.retweetCount]);
 
   //-------------Effect----------------------------------------------//
   return (

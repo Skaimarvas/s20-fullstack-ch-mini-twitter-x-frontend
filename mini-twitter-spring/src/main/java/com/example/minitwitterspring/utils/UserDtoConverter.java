@@ -18,7 +18,7 @@ public class UserDtoConverter {
 
     public SimpleUserDto toSimpleUserDto(User user){
         if(user != null){
-            return new SimpleUserDto(user.getId(), user.getUserName(), user.getFullName(), user.getEmail());
+            return new SimpleUserDto(user.getId(), user.getUsername(), user.getFullName(), user.getEmail());
         }
         return null;
     }
@@ -36,7 +36,7 @@ public class UserDtoConverter {
         if(user != null){
             return new TweetUserDto(
                     user.getId(),
-                    user.getUserName(),
+                    user.getUsername(),
                     user.getFullName(),
                     user.getEmail(),
                     TweetDtoConverter.getInstance().toDtoList(user.getTweets()),

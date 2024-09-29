@@ -3,13 +3,16 @@ package com.example.minitwitterspring.service;
 import com.example.minitwitterspring.entity.User;
 import com.example.minitwitterspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class IUserService implements UserService{
+public class IUserService implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -47,5 +50,13 @@ public class IUserService implements UserService{
             return user;
         }
         return null;
+    }
+
+    @Override
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username).orElseThrow(() -> {
+            System.out.println("User credentials are not valid");
+            throw new UsernameNotFoundException("User credentials are not valid");
+        });
     }
 }

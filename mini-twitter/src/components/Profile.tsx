@@ -3,10 +3,14 @@ import React from "react";
 import { Icon } from "@iconify/react";
 //Png
 import gamer from "../assets/gamer.png";
+import { Link } from "react-router-dom";
 
 const Profile: React.FC = () => {
   return (
-    <button className="flex items-center px-3 gap-5   justify-between lg:justify-center lg:p-[10px] hover:bg-gray-300  rounded-full hover:transition">
+    <Link
+      to="/login"
+      className="flex items-center px-3 gap-5   justify-between lg:justify-center lg:p-[10px] hover:bg-gray-300  rounded-full hover:transition"
+    >
       {" "}
       <div className="flex items-center gap-1 ">
         <img src={gamer} alt="" className="rounded-full h-10 w-10" />
@@ -16,7 +20,7 @@ const Profile: React.FC = () => {
         </div>
       </div>
       <Icon icon="icon-park-outline:more" className="text-[30px] lg:hidden" />
-    </button>
+    </Link>
   );
 };
 export default Profile;
